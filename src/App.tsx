@@ -13,20 +13,27 @@ const queryClient = new QueryClient();
 const App = () => {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState<string>();
-  const [nfts, setNfts] = useState<any[]>([]);
+  const [showNFTs, setShowNFTs] = useState(false);
+
+  const mockNfts = [
+    { id: "1", rarity: "COMMON", number: "587", image: "https://images.unsplash.com/photo-1618336753974-aae8e04506aa?w=500&h=500&fit=crop" },
+    { id: "2", rarity: "COMMON", number: "1654", image: "https://images.unsplash.com/photo-1548550023-2bdb3c5beed7?w=500&h=500&fit=crop" },
+    { id: "3", rarity: "RARE", number: "1738", image: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?w=500&h=500&fit=crop" },
+    { id: "4", rarity: "LEGENDARY", number: "1776", image: "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=500&h=500&fit=crop" },
+  ];
+
+  const nfts = isWalletConnected && showNFTs ? mockNfts : [];
 
   const handleConnectWallet = () => {
     if (!isWalletConnected) {
-      // Simulate wallet connection
       setIsWalletConnected(true);
-      setWalletAddress("0xb2...897f");
-      // Uncomment to test with NFTs
-      // setNfts([
-      //   { id: "1", rarity: "COMMON", number: "2386", image: "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=500" },
-      //   { id: "2", rarity: "LEGENDARY", number: "1155", image: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?w=500" },
-      //   { id: "3", rarity: "COMMON", number: "1290", image: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=500" },
-      // ]);
+      setWalletAddress("0xd4c2...1eC3");
     }
+  };
+
+  const handleDisconnectWallet = () => {
+    setIsWalletConnected(false);
+    setWalletAddress(undefined);
   };
 
   return (
@@ -43,7 +50,10 @@ const App = () => {
                   isWalletConnected={isWalletConnected}
                   walletAddress={walletAddress}
                   nfts={nfts}
+                  showNFTs={showNFTs}
+                  onToggleNFTs={setShowNFTs}
                   onConnectWallet={handleConnectWallet}
+                  onDisconnectWallet={handleDisconnectWallet}
                 />
               }
             />
@@ -54,7 +64,10 @@ const App = () => {
                   isWalletConnected={isWalletConnected}
                   walletAddress={walletAddress}
                   nfts={nfts}
+                  showNFTs={showNFTs}
+                  onToggleNFTs={setShowNFTs}
                   onConnectWallet={handleConnectWallet}
+                  onDisconnectWallet={handleDisconnectWallet}
                 />
               }
             />

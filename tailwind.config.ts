@@ -51,6 +51,7 @@ export default {
         success: "hsl(var(--success))",
         info: "hsl(var(--info))",
         "nft-common": "hsl(var(--nft-common))",
+        "nft-rare": "hsl(var(--nft-rare))",
         "nft-legendary": "hsl(var(--nft-legendary))",
       },
       borderRadius: {

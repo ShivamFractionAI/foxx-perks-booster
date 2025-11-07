@@ -1,10 +1,10 @@
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
-import { Wallet } from "lucide-react";
+import { Wallet, X } from "lucide-react";
 
 interface NFT {
   id: string;
-  rarity: "COMMON" | "LEGENDARY";
+  rarity: "COMMON" | "RARE" | "LEGENDARY";
   number: string;
   image: string;
 }
@@ -16,6 +16,7 @@ interface NFTSectionProps {
   nfts: NFT[];
   boostPercentage: number;
   onConnectWallet: () => void;
+  onDisconnectWallet: () => void;
 }
 
 export const NFTSection = ({
@@ -25,6 +26,7 @@ export const NFTSection = ({
   nfts,
   boostPercentage,
   onConnectWallet,
+  onDisconnectWallet,
 }: NFTSectionProps) => {
   return (
     <div className="mb-12">
@@ -35,13 +37,30 @@ export const NFTSection = ({
             Total {pageType} Boost: +{boostPercentage}%
           </p>
         </div>
-        {isWalletConnected && walletAddress && (
+        {!isWalletConnected ? (
           <Button
-            variant="outline"
-            className="border-primary/30 text-primary hover:bg-primary/10"
+            onClick={onConnectWallet}
+            className="bg-primary text-primary-foreground hover:bg-primary/90"
           >
-            {walletAddress}
+            Connect Wallet
           </Button>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              className="border-primary/30 text-primary hover:bg-primary/10"
+            >
+              {walletAddress}
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={onDisconnectWallet}
+              className="border-primary/30 text-primary hover:bg-primary/10 hover:text-destructive"
+            >
+              <X className="w-4 h-4" />
+            </Button>
+          </div>
         )}
       </div>
 
@@ -77,9 +96,11 @@ export const NFTSection = ({
                 <img src={nft.image} alt={`NFT ${nft.number}`} className="w-full aspect-square object-cover" />
                 <div className="absolute top-4 left-4 right-4 flex items-center justify-between">
                   <span
-                    className={`px-3 py-1 rounded text-xs font-bold ${
+                    className={`px-3 py-1 rounded text-xs font-bold uppercase ${
                       nft.rarity === "LEGENDARY"
                         ? "bg-nft-legendary text-background"
+                        : nft.rarity === "RARE"
+                        ? "bg-info text-background"
                         : "bg-nft-common text-foreground"
                     }`}
                   >

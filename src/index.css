@@ -43,6 +43,7 @@ All colors MUST be HSL.
     --info: 200 70% 50%;
     
     --nft-common: 0 70% 50%;
+    --nft-rare: 200 70% 50%;
     --nft-legendary: 45 90% 55%;
   }
 }

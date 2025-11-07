@@ -9,10 +9,13 @@ interface FAPsProps {
   isWalletConnected: boolean;
   walletAddress?: string;
   nfts: any[];
+  showNFTs: boolean;
+  onToggleNFTs: (checked: boolean) => void;
   onConnectWallet: () => void;
+  onDisconnectWallet: () => void;
 }
 
-const FAPs = ({ isWalletConnected, walletAddress, nfts, onConnectWallet }: FAPsProps) => {
+const FAPs = ({ isWalletConnected, walletAddress, nfts, showNFTs, onToggleNFTs, onConnectWallet, onDisconnectWallet }: FAPsProps) => {
   const boostPercentage = nfts.length > 0 ? 70 : 0;
 
   return (
@@ -23,7 +26,12 @@ const FAPs = ({ isWalletConnected, walletAddress, nfts, onConnectWallet }: FAPsP
         onConnectWallet={onConnectWallet}
       />
       <main className="container mx-auto px-4 py-8">
-        <DevControls isWalletConnected={isWalletConnected} nftCount={nfts.length} />
+        <DevControls 
+          isWalletConnected={isWalletConnected} 
+          nftCount={nfts.length}
+          showNFTs={showNFTs}
+          onToggleNFTs={onToggleNFTs}
+        />
 
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">
@@ -49,6 +57,7 @@ const FAPs = ({ isWalletConnected, walletAddress, nfts, onConnectWallet }: FAPsP
           nfts={nfts}
           boostPercentage={boostPercentage}
           onConnectWallet={onConnectWallet}
+          onDisconnectWallet={onDisconnectWallet}
         />
 
         <PerksSection />

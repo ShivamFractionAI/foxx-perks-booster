@@ -9,10 +9,13 @@ interface FractalsProps {
   isWalletConnected: boolean;
   walletAddress?: string;
   nfts: any[];
+  showNFTs: boolean;
+  onToggleNFTs: (checked: boolean) => void;
   onConnectWallet: () => void;
+  onDisconnectWallet: () => void;
 }
 
-const Fractals = ({ isWalletConnected, walletAddress, nfts, onConnectWallet }: FractalsProps) => {
+const Fractals = ({ isWalletConnected, walletAddress, nfts, showNFTs, onToggleNFTs, onConnectWallet, onDisconnectWallet }: FractalsProps) => {
   const boostPercentage = nfts.length > 0 ? 35 : 0;
 
   return (
@@ -23,7 +26,12 @@ const Fractals = ({ isWalletConnected, walletAddress, nfts, onConnectWallet }: F
         onConnectWallet={onConnectWallet}
       />
       <main className="container mx-auto px-4 py-8">
-        <DevControls isWalletConnected={isWalletConnected} nftCount={nfts.length} />
+        <DevControls 
+          isWalletConnected={isWalletConnected} 
+          nftCount={nfts.length}
+          showNFTs={showNFTs}
+          onToggleNFTs={onToggleNFTs}
+        />
 
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">
@@ -49,6 +57,7 @@ const Fractals = ({ isWalletConnected, walletAddress, nfts, onConnectWallet }: F
           nfts={nfts}
           boostPercentage={boostPercentage}
           onConnectWallet={onConnectWallet}
+          onDisconnectWallet={onDisconnectWallet}
         />
 
         <PerksSection />
